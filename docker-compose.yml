@@ -8,7 +8,9 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
-    image: hasura/graphql-engine:v2.33.1.cli-migrations-v3
+    # image: hasura/graphql-engine:v2.33.1.cli-migrations-v3
+    #
+    image: hasura/graphql-engine:v2.33.0
     ports:
       - "8080:8080"
     restart: always

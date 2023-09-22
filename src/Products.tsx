@@ -10,7 +10,7 @@ const countQuery = gql`
       }
     }
   }
-`
+`;
 
 export function Products(): JSX.Element {
 
