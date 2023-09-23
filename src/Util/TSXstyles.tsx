@@ -1,7 +1,7 @@
 export const navStyles = {
     body: {
         width: '100%',
-        height: '7%',
+        height: '6%',
         display: 'flex',
         flexFlow: 'row nowrap'
     },

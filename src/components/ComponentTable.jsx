@@ -85,6 +85,16 @@ class ComponentTable extends React.Component {
     clearFilters();
     this.setState({ searchText: "" });
   };
+  rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      this.props.setters(selectedRowKeys, selectedRowKeys);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === "kanon",
+      // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
   render() {
     const columns = [
       {
@@ -92,6 +102,7 @@ class ComponentTable extends React.Component {
         dataIndex: "id",
         key: "id",
         width: "10%",
+        sorter: (a, b) => a.id - b.id, // Enable sorting for this column
         ...this.getColumnSearchProps("id"),
       },
       {
@@ -113,6 +124,7 @@ class ComponentTable extends React.Component {
         dataIndex: "price",
         key: "price",
         width: "20%",
+        sorter: (a, b) => a.price - b.price,
         ...this.getColumnSearchProps("price"),
       },
       {
@@ -120,6 +132,7 @@ class ComponentTable extends React.Component {
         dataIndex: "stock",
         key: "stock",
         width: "20%",
+        sorter: (a, b) => a.stock - b.stock,
         ...this.getColumnSearchProps("stock"),
       },
     ];
@@ -129,6 +142,14 @@ class ComponentTable extends React.Component {
         style={{ width: "100%" }}
         columns={columns}
         dataSource={this.props.data}
+        pagination={{
+          pageSize: 5,
+          total: this.props.data.length,
+        }}
+        rowSelection={{
+          type: "checkbox",
+          ...this.rowSelection,
+        }}
       />
     );
   }
