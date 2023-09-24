@@ -1,34 +1,32 @@
 import React from "react";
 import { PlusCircleFilled } from '@ant-design/icons';
 import { Button, Modal } from "antd";
-import ComponentInput from './ComponentInput';
 import ComponentForm from "./ComponentForm";
-import Sidebar from "../pages/Sidebar";
 
 export default function ComponentListNavigation({
   isOpen,
   onOk,
   onCancel,
   openModal,
-  save,
   onDelete,
-}) {
+  form
+}:any) {
   return (
     <div style={style.nav}>
-      <ComponentInput color={'white'} />
+    <Button type="primary" onClick={onDelete}>Delete</Button>
       <Button
         type="primary"
         style={{
-          margin: '10px',
+          marginLeft: "10px",
+          marginRight: "10px",
         }}
         onClick={openModal}
       >
         <PlusCircleFilled />
         Add Item
       </Button>
-      <Sidebar save={save} onDelete={onDelete} />
       <Modal
-        visible={isOpen}
+        open={isOpen}
         title="Add Inventory"
         onOk={onOk}
         onCancel={onCancel}
@@ -38,7 +36,7 @@ export default function ComponentListNavigation({
           </Button>,
         ]}
       >
-        <ComponentForm onOk={onOk} />
+        <ComponentForm onOk={onOk}form={form} />
       </Modal>
     </div>
   );
@@ -63,10 +61,10 @@ const style = {
     height: '8%',
     width: '100%',
     display: 'flex',
-    flexDirection: 'row',
+     flexDirection: 'row-reverse',
     flexWrap: 'nowrap',
     paddingBottom: '10px',
-    justifyContent: 'space-between',
+    
     paddingRight: '20px',
   },
-};
+} as const;

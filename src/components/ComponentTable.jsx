@@ -55,7 +55,7 @@ class ComponentTable extends React.Component {
     ),
     onFilter: (value, record) =>
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownVisibleChange: (visible) => {
+    onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => this.searchInput.select());
       }
@@ -89,11 +89,11 @@ class ComponentTable extends React.Component {
     onChange: (selectedRowKeys, selectedRows) => {
       this.props.setters(selectedRowKeys, selectedRowKeys);
     },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "kanon",
-      // Column configuration not to be checked
-      name: record.name,
-    }),
+    // getCheckboxProps: (record) => ({
+    //   disabled: record.name === "kanon",
+    //   // Column configuration not to be checked
+    //   name: record.name,
+    // }),
   };
   render() {
     const columns = [

@@ -1,7 +1,5 @@
-import React from "react";
-import { Form, Input, Button } from "antd";
-
-// Checkbox
+import { useState } from "react";
+import {  Input, Button, InputNumber,Form } from "antd";
 
 const layout = {
   labelCol: { span: 8 },
@@ -11,15 +9,15 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-export default function ComponentForm({ onOk }: any) {
-    const [form] = Form.useForm();
-    
-  const handleReset = () => {
-    form.resetFields();
+export default function ComponentForm({ onOk, form }: any) {
+  
+  const [floatValue, setFloatValue] = useState(null);
+
+  const handleFloatChange = (value:any) => {
+    setFloatValue(value);
   };
   const onFinish = (values: any) => {
     onOk(values);
-    handleReset();
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -50,12 +48,27 @@ export default function ComponentForm({ onOk }: any) {
       <Form.Item
         label="Price"
         name="price"
-        rules={[{ required: true, message: "Please input Product Price!" }]}
+        rules={[
+          { required: true, message: "Please input Product Price in Number!" },
+        ]}
       >
-        <Input />
+        <InputNumber
+          style={{ width: 180 }}
+          step={0.1} // Set the step value to allow floating-point numbers
+          value={floatValue}
+          onChange={handleFloatChange}
+          formatter={(value) => `${value}`.replace(/[^0-9.]/g, "")} // Format the input
+          parser={(value) => (value === "." ? "" : value)} // Remove invalid characters
+        />
       </Form.Item>
-      <Form.Item label="Stock" name="stock">
-        <Input />
+      <Form.Item
+        label="Stock"
+        name="stock"
+      >
+        <InputNumber
+          style={{ width: 180 }}
+          step={1} // Set the step value to allow floating-point numbers
+        />
       </Form.Item>
 
       <Form.Item {...tailLayout}>
