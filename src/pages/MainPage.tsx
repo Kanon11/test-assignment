@@ -1,11 +1,11 @@
-import React from "react";
-import List from "./List";
+
+import ListPage from "./ListPage";
 import { mainStyle as style } from "../Util/TSXstyles";
-function Main(props: any) {
+function MainPage() {
     return (
         <div style={style.body}>
-        <List/>
+        <ListPage/>
         </div>
     )
 }
-export default Main;
+export default MainPage;

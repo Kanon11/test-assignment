@@ -1,6 +1,6 @@
 import React from 'react';
-import Nav from './pages/Nav';
-import Main from './pages/Main'
+import NavPage from './pages/NavPage';
+import MainPage from './pages/MainPage'
 
 
 
@@ -9,8 +9,8 @@ function App() {
   return (
     <div className='app'>
       
-      <Nav />
-      <Main/>
+      <NavPage />
+      <MainPage/>
 
     </div>
   );

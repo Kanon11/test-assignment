@@ -3,7 +3,7 @@ import Highlighter from "react-highlight-words";
 import React from "react";
 import { SearchOutlined } from "@ant-design/icons";
 
-class ComponentTable extends React.Component {
+class TableComponent extends React.Component {
   state = {
     searchText: "",
     searchedColumn: "",
@@ -89,11 +89,7 @@ class ComponentTable extends React.Component {
     onChange: (selectedRowKeys, selectedRows) => {
       this.props.setters(selectedRowKeys, selectedRowKeys);
     },
-    // getCheckboxProps: (record) => ({
-    //   disabled: record.name === "kanon",
-    //   // Column configuration not to be checked
-    //   name: record.name,
-    // }),
+
   };
   render() {
     const columns = [
@@ -154,4 +150,4 @@ class ComponentTable extends React.Component {
     );
   }
 }
-export default ComponentTable;
+export default TableComponent;

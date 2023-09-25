@@ -20,7 +20,11 @@ export const DELETE_PRODUCT_MUTATION = gql`
 mutation deleteProduct($id: Int) {
   delete_products(where: {id: {_eq: $id}}) {
     returning {
-      id
+      id,
+      name,
+      description,
+      price,
+      stock
     }
   }
 }

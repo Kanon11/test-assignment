@@ -9,7 +9,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-export default function ComponentForm({ onOk, form }: any) {
+export default function FormComponent({ onOk, form }: any) {
   
   const [floatValue, setFloatValue] = useState(null);
 
@@ -53,7 +53,7 @@ export default function ComponentForm({ onOk, form }: any) {
         ]}
       >
         <InputNumber
-          style={{ width: 180 }}
+          style={{ width: 150 }}
           step={0.1} // Set the step value to allow floating-point numbers
           value={floatValue}
           onChange={handleFloatChange}
@@ -66,7 +66,7 @@ export default function ComponentForm({ onOk, form }: any) {
         name="stock"
       >
         <InputNumber
-          style={{ width: 180 }}
+          style={{ width: 150 }}
           step={1} // Set the step value to allow floating-point numbers
         />
       </Form.Item>
