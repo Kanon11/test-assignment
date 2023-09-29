@@ -53,21 +53,27 @@ export default function FormComponent({ onOk, form }: any) {
         ]}
       >
         <InputNumber
+          min={0} // Minimum allowed value
           style={{ width: 150 }}
           step={0.1} // Set the step value to allow floating-point numbers
           value={floatValue}
           onChange={handleFloatChange}
           formatter={(value) => `${value}`.replace(/[^0-9.]/g, "")} // Format the input
-          parser={(value) => (value === "." ? "" : value)} // Remove invalid characters
+          parser={(value: any) => (value === "." ? "" : value)} // Remove invalid characters
         />
       </Form.Item>
-      <Form.Item
-        label="Stock"
-        name="stock"
-      >
+      <Form.Item label="Stock" name="stock">
         <InputNumber
+          min={0} // Minimum allowed value
+          max={2147483647}
           style={{ width: 150 }}
           step={1} // Set the step value to allow floating-point numbers
+          parser={(value: any) => {
+            if (isNaN(value) || value < 0) {
+              return 0;
+            }
+            return value;
+          }}
         />
       </Form.Item>
 

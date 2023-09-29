@@ -1,4 +1,9 @@
-import { PlusCircleFilled, PayCircleOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import {
+  PlusCircleFilled,
+  PayCircleOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import { Button, Modal } from "antd";
 import FormComponent from "./FormComponent";
 
@@ -10,13 +15,42 @@ export default function ActionComponent({
   onDelete,
   form,
   totalValue,
+  toDel,
+  Message,
 }: any) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // Function to handle the "Confirm" button click
+  const handleConfirm = () => {
+    // Perform delete on confirmation
+    onDelete();
+    setIsModalVisible(false); // Close the modal
+  };
+
+  // Function to handle the "Cancel" button click
+  const handleCancel = () => {
+    setIsModalVisible(false); // Close the modal
+  };
+
+  // Function to open the confirmation modal
+  const showConfirmationModal = () => {
+
+    // if no data selected yet then no need to show confirmation modal, i am just showing a warning message
+    console.log(toDel);
+    if (toDel.length > 0) {
+      setIsModalVisible(true);
+    }
+    else {
+      Message('warning', 'Please select a row first.');
+    }
+  };
+
   return (
     <div style={style.nav}>
       <Button
         type="default"
         style={{ color: "#006666", fontWeight: "bold" }}
-        onClick={onDelete}
+        onClick={showConfirmationModal}
       >
         Delete
       </Button>
@@ -50,6 +84,31 @@ export default function ActionComponent({
         ]}
       >
         <FormComponent onOk={onOk} form={form} />
+      </Modal>
+
+      <Modal
+        title={
+          <span>
+            <ExclamationCircleOutlined
+              style={{ color: "orange", marginRight: "8px" }}
+            />
+            Confirmation
+          </span>
+        }
+        open={isModalVisible}
+        onOk={handleConfirm}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>
+            Cancel
+          </Button>,
+          <Button key="confirm" type="primary" onClick={handleConfirm}>
+            Confirm
+          </Button>,
+        ]}
+      >
+        <p>Are you sure you want to delete selected row?</p>
+        {/* Add any additional content or message here */}
       </Modal>
     </div>
   );

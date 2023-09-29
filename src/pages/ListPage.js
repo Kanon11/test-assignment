@@ -13,7 +13,7 @@ export default function ListPage() {
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [toDel, setToDel] = useState([]);
-  let [totalValue, setTotalValue] = useState(0);
+  let totalValue = 0;
 
   // usable const variable from antd
   const [messageApi, contextHolder] = message.useMessage();
@@ -23,22 +23,23 @@ export default function ListPage() {
   const { data: inventoryData, error, loading } = useQuery(LOAD_PRODUCTS);
   useEffect(() => {
     if (inventoryData && inventoryData.products) {
-
       const arrivedData = inventoryData.products.map((item) => {
-        totalValue += ((item.price) * (item.stock));
-
         return {
           ...item,
           key: item.id,
         }
       });
       setData(arrivedData);
-      setTotalValue(totalValue);
     }
     if (error && loading === false) {
       console.log("I think we have an error");
     }
   }, [inventoryData, error, loading]);
+
+// calculation of totalValue from arrived data from db
+  totalValue = data.reduce((totalValue, item) => {
+    return totalValue + item.stock * item.price;
+  }, 0).toFixed(4);
 
 
   // Action for Inventory Creation
@@ -47,12 +48,17 @@ export default function ListPage() {
     try {
       const { data } = await insert_products(obj);
       const returning = data.insert_products.returning;
-      totalValue += ((returning[0].price) * (returning[0].stock))
-      setTotalValue(totalValue);
-      setData((state) => {
 
+
+
+      // adding item to data state, after successful data insertion
+      setData((state) => {
         return [{ ...returning[0], key: returning[0]['id'] }, ...state];
+
       });
+      // incrementing  totalValue when delete an item from inventory list
+      totalValue += ((returning[0].price) * (returning[0].stock))
+      Message('success', 'Creation Success');
     } catch (error) {
       // Handle GraphQL mutation error
       Message('error', error);
@@ -65,8 +71,11 @@ export default function ListPage() {
   const deleteItem = async (obj) => {
     try {
       const { data } = await delete_product(obj);
+      // reducing totalValue when delete an item from inventory list
       totalValue -= ((data.delete_products.returning[0].price) * (data.delete_products.returning[0].stock))
-      setTotalValue(totalValue);
+
+
+      // removing item form data state, after successful data deletion
       setData((state) => {
         return state.filter((item) => item.key !== data.delete_products.returning[0]['id']);
       });
@@ -88,13 +97,11 @@ export default function ListPage() {
     stock = stock ?? 0;
     console.log({ name, description, price, stock })
     const exists = data.some((object) => object.name === name);
-
     if (exists) {
       Message('error', 'name should be unique!!!');
     }
     else {
       createItem({ variables: { name, description, price, stock } });
-      Message('success', 'Creation Success');
       setIsOpen(false);
       handleReset();
     }
@@ -106,6 +113,7 @@ export default function ListPage() {
       deleteItem({ variables: { id: del } });
       flag = true;
     });
+    setToDel([]);
     if (flag) {
       Message('success', 'Deletion Success');
 
@@ -138,6 +146,8 @@ export default function ListPage() {
         onDelete={onDelete}
         form={form}
         totalValue={totalValue}
+        toDel={toDel}
+        Message={Message}
       />
       <TableComponent data={data} setters={setters} />
     </div>

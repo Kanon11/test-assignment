@@ -1,23 +1,32 @@
 import { Table, Input, Button, Space } from "antd";
 import Highlighter from "react-highlight-words";
-import React from "react";
 import { SearchOutlined } from "@ant-design/icons";
+import { Component } from "react";
+interface TableComponentProps {
+  data: Array<any>;
+  setters: (selectedRowKeys: any, selectedRows: any) => void; // Define the setters prop
+}
 
-class TableComponent extends React.Component {
+interface TableComponentState {
+  searchText: string;
+  searchedColumn: string;
+}
+class TableComponent extends Component<TableComponentProps,TableComponentState> {
   state = {
     searchText: "",
     searchedColumn: "",
   };
-  getColumnSearchProps = (dataIndex) => ({
+  searchInput: typeof Input | null = null;
+  getColumnSearchProps = (dataIndex: any) => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
       confirm,
       clearFilters,
-    }) => (
+    }: any) => (
       <div style={{ padding: 8 }}>
         <Input
-          ref={(node) => {
+          ref={(node: any) => {
             this.searchInput = node;
           }}
           placeholder={`Search ${dataIndex}`}
@@ -50,17 +59,17 @@ class TableComponent extends React.Component {
         </Space>
       </div>
     ),
-    filterIcon: (filtered) => (
+    filterIcon: (filtered: any) => (
       <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
-    onFilter: (value, record) =>
+    onFilter: (value: any, record: any) =>
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
+    onFilterDropdownOpenChange: (visible: any) => {
       if (visible) {
-        setTimeout(() => this.searchInput.select());
+        setTimeout(() => (this.searchInput as any).select());
       }
     },
-    render: (text) =>
+    render: (text: any) =>
       this.state.searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
@@ -73,7 +82,7 @@ class TableComponent extends React.Component {
       ),
   });
 
-  handleSearch = (selectedKeys, confirm, dataIndex) => {
+  handleSearch = (selectedKeys: any, confirm: any, dataIndex: any) => {
     confirm();
     this.setState({
       searchText: selectedKeys[0],
@@ -81,15 +90,14 @@ class TableComponent extends React.Component {
     });
   };
 
-  handleReset = (clearFilters) => {
+  handleReset = (clearFilters: any) => {
     clearFilters();
     this.setState({ searchText: "" });
   };
   rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
+    onChange: (selectedRowKeys: any, selectedRows: any) => {
       this.props.setters(selectedRowKeys, selectedRowKeys);
     },
-
   };
   render() {
     const columns = [
@@ -98,7 +106,7 @@ class TableComponent extends React.Component {
         dataIndex: "id",
         key: "id",
         width: "10%",
-        sorter: (a, b) => a.id - b.id, // Enable sorting for this column
+        sorter: (a: any, b: any) => a.id - b.id, // Enable sorting for this column
         ...this.getColumnSearchProps("id"),
       },
       {
@@ -120,7 +128,7 @@ class TableComponent extends React.Component {
         dataIndex: "price",
         key: "price",
         width: "20%",
-        sorter: (a, b) => a.price - b.price,
+        sorter: (a: any, b: any) => a.price - b.price,
         ...this.getColumnSearchProps("price"),
       },
       {
@@ -128,7 +136,7 @@ class TableComponent extends React.Component {
         dataIndex: "stock",
         key: "stock",
         width: "20%",
-        sorter: (a, b) => a.stock - b.stock,
+        sorter: (a: any, b: any) => a.stock - b.stock,
         ...this.getColumnSearchProps("stock"),
       },
     ];
