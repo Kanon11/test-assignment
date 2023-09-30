@@ -8,9 +8,14 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
-    # image: hasura/graphql-engine:v2.33.1.cli-migrations-v3
-    #
-    image: hasura/graphql-engine:v2.33.0
+
+    # if you want to migrate db then uncomment this 
+    image: hasura/graphql-engine:v2.33.1.cli-migrations-v3
+    
+    #if upper image of hasua graphql not work then uncomment this image and docker compose up again
+    # image: hasura/graphql-engine:v2.33.0
+
+
     ports:
       - "8080:8080"
     restart: always
