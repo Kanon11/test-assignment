@@ -20,9 +20,9 @@ Please complete all of the following:
 1. Calculate total value of all products in the inventory
 1. Create a form to add new product to inventory
 
-## Preview of Run App to local machine
+## YouTube Video to Run App in local machine
 
-[![Watch the video](https://img.youtube.com/vi/J3NyHCPTXYs/maxresdefault.jpg)](https://youtu.be/J3NyHCPTXYs)
+[<img src="https://img.youtube.com/vi/J3NyHCPTXYs/maxresdefault.jpg" width="50%">](https://youtu.be/J3NyHCPTXYs)
 
 ## Run the application
 
