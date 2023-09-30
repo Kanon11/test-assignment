@@ -23,12 +23,6 @@ Please complete all of the following:
 ## Run the application
 
 ```sh
-# install dependencies
-npm i
-
-# start frontend server
-npm start
-
 # start postgres & hasura
 docker compose up
 
@@ -39,6 +33,13 @@ set Database name as "db" and then click on "Connect Database" button.
 
 after that go to http://localhost:8080/console/data/db/schema/public and click on "Track All" button,
 which is right side of "Untracked tables or views" option.
+
+# install dependencies
+npm i
+
+# start frontend server
+npm start
+
 
 now you are done, open http://localhost:3000/ in your browser.
 
