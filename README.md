@@ -23,6 +23,12 @@ Please complete all of the following:
 ## Run the application
 
 ```sh
+# Git Clone to your Loacal Machine
+git clone https://github.com/Kanon11/test-assignment.git
+
+# Go to project directory
+cd test-assignment
+
 # start postgres & hasura
 docker compose up -d
 
@@ -33,7 +39,7 @@ npm i
 npm start
 
 
-now you are done, open http://localhost:3000/ in your browser.
+now you are done, open http://localhost:3000 in your browser.
 
 
 ```
